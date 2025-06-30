@@ -32,6 +32,11 @@ qmk_firmware on  master [?] via 🐍 v3.13.3 took 12s
 ❯ cp lily58_rev1_default_promicro_rp2040.uf2 /run/media/ketan/RPI-RP2/
 ```
 
+7. (optional) to update image
+- I edited font and render as logo in `glcdfont_lily.c` 
+- used [QMK Logo Editor](https://joric.github.io/qle/) 
+
+
 Lily58 is 6×4+5keys column-staggered split keyboard.
 
 ![Lily58_01](https://user-images.githubusercontent.com/6285554/50394214-72479880-079f-11e9-9d91-33fdbf1d7715.jpg)

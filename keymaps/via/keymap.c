@@ -122,19 +122,33 @@ const char *read_keylogs(void);
 // void set_timelog(void);
 // const char *read_timelog(void);
 
+char name_str[24];
+
+const char *get_name(void) {
+  snprintf(name_str, sizeof(name_str), "Ketan's lily");
+  return name_str;
+}
+
+
 bool oled_task_user(void) {
   if (is_keyboard_master()) {
-    // If you want to change the display of OLED, you need to change here
-    oled_write_ln(read_layer_state(), false);
+    oled_write_ln(get_name(), false);
+    
     oled_write_ln(read_keylog(), false);
-    oled_write_ln(read_keylogs(), false);
-    //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
-    //oled_write_ln(read_host_led_state(), false);
-    //oled_write_ln(read_timelog(), false);
+    // oled_write_ln(read_keylogs(), false);
+
+    oled_advance_page(true);  // Skip to next page/line
+    
+    oled_write_P(PSTR("WPM: "), false);
+    oled_write(get_u8_str(get_current_wpm(), ' '), false);
+    oled_write_P(PSTR(" | "), false);
+    oled_write(read_layer_state(), false);
+
   } else {
     oled_write(read_logo(), false);
+    // If you want to change the display of OLED, you need to change here
   }
-    return false;
+  return false;
 }
 #endif // OLED_ENABLE
 
