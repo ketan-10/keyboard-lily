@@ -32,6 +32,15 @@ qmk_firmware on  master [?] via 🐍 v3.13.3 took 12s
 ❯ cp lily58_rev1_default_promicro_rp2040.uf2 /run/media/ketan/RPI-RP2/
 ```
 
+6. compile and move firmware (via keymap)
+```sh
+qmk_firmware on  master [?] via 🐍 v3.13.3 
+❯ qmk compile -kb lily58 -km via -e CONVERT_TO=promicro_rp2040 
+
+qmk_firmware on  master [?] via 🐍 v3.13.3 took 12s 
+❯ cp lily58_rev1_via_promicro_rp2040.uf2 /run/media/ketan/RPI-RP2/
+```
+
 7. (optional) to update image
 - I edited font and render as logo in `glcdfont_lily.c` 
 - used [QMK Logo Editor](https://joric.github.io/qle/) 
