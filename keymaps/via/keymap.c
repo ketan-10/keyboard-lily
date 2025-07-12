@@ -129,6 +129,44 @@ const char *get_name(void) {
   return name_str;
 }
 
+#define ANIMATION_SPEED 100  // ms between moves
+#define ROWS 3
+#define COLS 21
+
+const uint8_t logo_data[] PROGMEM = {
+    // Row 0t
+    0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94,
+    // Row 1
+    0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4,
+    // Row 2
+    0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4,
+};
+
+const char *rotate_logo(void) {
+    static uint32_t timer = 0;
+    static uint8_t offset = 0;
+    static char buffer[ROWS * COLS + 1];
+    
+    // Move up one column
+    if (timer_elapsed32(timer) > ANIMATION_SPEED) {
+        timer = timer_read32();
+        offset = (offset + 1) % COLS;  // 21 cols
+    }
+    
+     // Copy to buffer with rotation
+    for (uint8_t i = 0; i < ROWS * COLS; i++) {
+        uint8_t row = i / COLS;
+        uint8_t col = i % COLS;
+        uint8_t src_col = (col + offset) % COLS;
+        uint8_t src_index = row * COLS + src_col;
+        
+        buffer[i] = pgm_read_byte(&logo_data[src_index]);
+    }
+    buffer[ROWS * COLS] = '\0';
+    
+    return buffer;
+}
+
 
 bool oled_task_user(void) {
   if (is_keyboard_master()) {
@@ -145,7 +183,7 @@ bool oled_task_user(void) {
     oled_write(read_layer_state(), false);
 
   } else {
-    oled_write(read_logo(), false);
+    oled_write(rotate_logo(), false);
     // If you want to change the display of OLED, you need to change here
   }
   return false;
