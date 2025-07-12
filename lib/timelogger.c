@@ -2,13 +2,13 @@
 #include "timer.h"
 
 char timelog_str[24] = {};
-int last_time = 0;
-int elapsed_time = 0;
+uint32_t last_time = 0;
+uint32_t elapsed_time = 0;
 
 void set_timelog(void) {
-  elapsed_time = timer_elapsed(last_time);
-  last_time = timer_read();
-  snprintf(timelog_str, sizeof(timelog_str), "lt:%5d, et:%5d", last_time, elapsed_time);
+  elapsed_time = timer_elapsed32(last_time);
+  last_time = timer_read32();
+  snprintf(timelog_str, sizeof(timelog_str), "lt:%5lu, et:%5lu", last_time / 1000, elapsed_time);
 }
 
 const char *read_timelog(void) {
