@@ -23,15 +23,6 @@ VIA_ENABLE = yes            # Enable VIA support
 
 5. happy coding
 
-6. compile and move firmware
-```sh
-qmk_firmware on  master [?] via 🐍 v3.13.3 
-❯ qmk compile -kb lily58 -km default -e CONVERT_TO=promicro_rp2040 
-
-qmk_firmware on  master [?] via 🐍 v3.13.3 took 12s 
-❯ cp lily58_rev1_default_promicro_rp2040.uf2 /run/media/ketan/RPI-RP2/
-```
-
 6. compile and move firmware (via keymap)
 ```sh
 qmk_firmware on  master [?] via 🐍 v3.13.3 
